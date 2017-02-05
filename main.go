@@ -3,6 +3,7 @@ package bongo
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	"gopkg.in/mgo.v2"
 )
@@ -67,7 +68,27 @@ func (m *Connection) Connect() (err error) {
 
 	m.Session.SetMode(mgo.Monotonic, true)
 
+	go m.autoReconnect(session)
+
 	return nil
+}
+
+func (m *Connection) autoReconnect(session *mgo.Session) {
+	var err error
+	for {
+		err = session.Ping()
+		if err != nil {
+			fmt.Println("Lost connection to MongoDB!!")
+			session.Refresh()
+			err = session.Ping()
+			if err == nil {
+				fmt.Println("Reconnect to MongoDB successful.")
+			} else {
+				panic("Reconnect to MongoDB failed!!")
+			}
+		}
+		time.Sleep(time.Second * 10)
+	}
 }
 
 // CollectionFromDatabase ...

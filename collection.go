@@ -2,12 +2,11 @@ package bongo
 
 import (
 	"errors"
-	// "fmt"
+	"strings"
+	"time"
+
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"time"
-	// "math"
-	"strings"
 )
 
 type BeforeSaveHook interface {
@@ -233,7 +232,13 @@ func (c *Collection) FindOne(query interface{}, doc interface{}) error {
 		} else {
 			return &DocumentNotFoundError{}
 		}
+	}
 
+	if hook, ok := doc.(AfterFindHook); ok {
+		err := hook.AfterFind(c)
+		if err != nil {
+			return err
+		}
 	}
 
 	if newt, ok := doc.(NewTracker); ok {

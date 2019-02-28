@@ -144,7 +144,7 @@ func (c *Collection) Save(doc Document) error {
 		tt.SetModified(now)
 	}
 
-	go CascadeSave(c, doc)
+	CascadeSave(c, doc)
 
 	id := doc.GetId()
 

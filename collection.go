@@ -144,8 +144,6 @@ func (c *Collection) Save(doc Document) error {
 		tt.SetModified(now)
 	}
 
-	CascadeSave(c, doc)
-
 	id := doc.GetId()
 
 	if !isNew && !id.Valid() {
@@ -159,6 +157,8 @@ func (c *Collection) Save(doc Document) error {
 	}
 
 	_, err = col.UpsertId(id, doc)
+
+	CascadeSave(c, doc)
 
 	if err != nil {
 		return err

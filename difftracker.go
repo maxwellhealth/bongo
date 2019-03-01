@@ -155,7 +155,7 @@ func GetChangedFields(struct1 interface{}, struct2 interface{}, useBson bool) ([
 	}
 
 	if type1.Kind() != reflect.Struct || type2.Kind() != reflect.Struct {
-		return diffs, errors.New(fmt.Sprintf("Can only compare two structs or two pointers to structs", type1.Kind(), type2.Kind()))
+		return diffs, errors.New(fmt.Sprintf("Can only compare two structs or two pointers to structs %v %v", type1.Kind(), type2.Kind()))
 	}
 
 	for i := 0; i < type1.NumField(); i++ {

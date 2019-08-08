@@ -1,5 +1,5 @@
 # What's Bongo?
-We couldn't find a good ODM for MongoDB written in Go, so we made one. Bongo is a wrapper for mgo (https://github.com/go-mgo/mgo) that adds ODM, hooks, validation, and cascade support to its raw Mongo functions.
+We couldn't find a good ODM for MongoDB written in Go, so we made one. Bongo is a wrapper for mgo (https://github.com/globalsign/mgo) that adds ODM, hooks, validation, and cascade support to its raw Mongo functions.
 
 Bongo is tested using the fantasic GoConvey (https://github.com/smartystreets/goconvey)
 
